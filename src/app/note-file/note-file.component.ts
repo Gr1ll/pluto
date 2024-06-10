@@ -16,8 +16,7 @@ export class NoteFileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeSub = this.route.params.subscribe((params) => {
-      console.log(params); //log the entire params object
-      console.log(params["note"]); //log the value of id
+      console.log(params["noteId"]); //log the value of id
     });
   }
 

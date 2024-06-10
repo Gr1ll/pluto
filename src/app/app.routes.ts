@@ -3,7 +3,7 @@ import { NoteFileComponent } from "./note-file/note-file.component";
 
 export const routes: Routes = [
   {
-    path: ":note",
+    path: ":noteId",
     component: NoteFileComponent,
   },
 ];
