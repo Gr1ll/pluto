@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Brygada+1918:ital,wght@0,400..700;1,400..700&display=swap");
+
+.add-note-file {
+  display: flex;
+  justify-content: end;
+  padding: 10px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.note-file {
+  height: 20px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.note-file:hover {
+  background-color: #f0f0f0;
+}
+
+.note-text {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-family: "Brygada 1918", serif;
+}
