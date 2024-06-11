@@ -1,5 +1,8 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
+
+mod create_document;
+
 use rustc_serialize::json::Json;
 use std::fs::File;
 use std::io:: {stdout, copy};
