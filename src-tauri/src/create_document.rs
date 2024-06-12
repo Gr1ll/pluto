@@ -14,8 +14,13 @@ pub fn get_app_data_dir() -> PathBuf {
 pub fn check_if_files_exist() {
     let app_data_dir = get_app_data_dir();
     print!("{:?}", app_data_dir);
+
     let notes_path = app_data_dir.join("notes.json");
     let config_path = app_data_dir.join("config.json");
+
+    if !app_data_dir.exists() {
+        std::fs::create_dir_all(app_data_dir).unwrap();
+    }
 
     if !notes_path.exists() {
         let mut file = File::create(&notes_path).unwrap();
@@ -30,12 +35,7 @@ pub fn check_if_files_exist() {
 
 pub fn create_note_document(document_name: &str) -> bool {
     let app_data_dir = get_app_data_dir();
-    let document_path = app_data_dir.join(format!("{}.json", document_name));
     let notes_path = app_data_dir.join("notes.json");
-
-    let json = Json::from_str("{\"name\":\"John Doe\"}").unwrap();
-    let mut file = File::create(&document_path).unwrap();
-    file.write_all(json.to_string().as_bytes()).unwrap();
 
     let mut notes_file = File::open(&notes_path).expect("Unable to open file");
     let mut notes_data = String::new();
@@ -43,6 +43,11 @@ pub fn create_note_document(document_name: &str) -> bool {
 
     let mut notes_json: Value = serde_json::from_str(&notes_data).expect("Unable to parse JSON");
     let notes_array = notes_json["notes"].as_array_mut().expect("Expected notes to be an array");
+
+    let document_path = app_data_dir.join(format!("{}.json", notes_array.len() + 1));
+    let json = Json::from_str("{\"name\":\"John Doe\"}").unwrap();
+    let mut file = File::create(&document_path).unwrap();
+    file.write_all(json.to_string().as_bytes()).unwrap();
 
     let new_note = json!({
         "id": notes_array.len() + 1,
