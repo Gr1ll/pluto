@@ -14,8 +14,8 @@ export class SidebarComponent {
   constructor() {}
   documentToCreate: String = "";
 
-  createDocument(document_name: String) {
-    invoke("get_document_creation", { document_name }).then((res) => {
+  createDocument(documentName: String) {
+    invoke("get_document_creation", { documentName }).then((res) => {
       console.log(res);
     });
   }
