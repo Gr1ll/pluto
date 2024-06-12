@@ -16,11 +16,11 @@ pub fn check_if_files_exist() {
     }
 }
 
-fn create_note_document(document_name: &str) {
+pub fn create_note_document(document_name: &str) -> bool {
     let json = Json::from_str("{\"name\":\"John Doe\"}").unwrap();
-    let mut file = File::create(document_name).unwrap();
+    let mut file = File::create(document_name + ".json").unwrap();
     file.write_all(json.to_string().as_bytes()).unwrap();
-    println!("{:?}", "file");
+
     let mut notes_file = File::open("notes.json").expect("Unable to open file");
     let mut notes_data = String::new();
     notes_file.read_to_string(&mut notes_data).expect("Unable to read file");
@@ -37,6 +37,5 @@ fn create_note_document(document_name: &str) {
 
     let mut notes_file = File::create("notes.json").expect("Unable to create file");
     notes_file.write_all(notes_json.to_string().as_bytes()).expect("Unable to write to file");
-
-    println!("{:?}", "notes_file");
+    return true;
 }

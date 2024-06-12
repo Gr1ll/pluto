@@ -10,11 +10,12 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn get_document_creation(document_name: &str) -> String {
+    create_document::create_note_document(document_name);
     format!("Hello, {}! You've been greeted from Me!", document_name)
 }
 
 fn main() {
-   create_document::check_if_files_exist();
+    create_document::check_if_files_exist();
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![greet, get_document_creation])
         .run(tauri::generate_context!())
