@@ -14,3 +14,5 @@
 <div class="note-file">
   <p class="note-text">ToDos</p>
 </div>
+<input [(ngModel)]="documentToCreate" />
+<button (click)="createDocument(this.documentToCreate)">Test</button>
