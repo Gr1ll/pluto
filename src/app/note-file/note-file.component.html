@@ -1,1 +1,13 @@
-<p>note-file works!</p>
+<div class="container">
+  <div class="editor">
+    <h2>Markdown Editor</h2>
+    <textarea
+      [(ngModel)]="markdownContent"
+      (ngModelChange)="updateContent($event)"
+    ></textarea>
+  </div>
+  <div class="preview">
+    <h2>Markdown Preview</h2>
+    <div [innerHTML]="markdownContent | markdown"></div>
+  </div>
+</div>
