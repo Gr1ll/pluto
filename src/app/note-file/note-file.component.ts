@@ -25,6 +25,7 @@ export class NoteFileComponent implements OnInit, OnDestroy {
   markdownContent: WritableSignal<string> = signal("Initial content...");
   isEditing: boolean = false;
   isEditingTitle: boolean = false;
+  currentDocumentId: WritableSignal<Number> = signal(new Number());
 
   constructor(private route: ActivatedRoute, private renderer: Renderer2) {}
 
@@ -33,6 +34,7 @@ export class NoteFileComponent implements OnInit, OnDestroy {
     this.routeSub = this.route.params.subscribe((params) => {
       const id = params["noteId"];
       documentId = parseInt(id);
+      this.currentDocumentId.set(documentId);
 
       invoke("get_document_name_by_id", { documentId }).then(
         (res: string | any) => {
@@ -68,6 +70,9 @@ export class NoteFileComponent implements OnInit, OnDestroy {
 
   updateTitle(newTitle: string) {
     this.documentName.set(newTitle);
+    const documentId = this.currentDocumentId();
+    const documentName = newTitle;
+    invoke("update_name_by_id", { documentId, documentName });
   }
 
   ngOnDestroy() {
