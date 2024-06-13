@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, Renderer2 } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { invoke } from "@tauri-apps/api/tauri";
 import { FormsModule } from "@angular/forms";
@@ -18,12 +18,17 @@ import {
   styleUrl: "./sidebar.component.css",
 })
 export class SidebarComponent implements OnInit {
-  constructor() {}
+  constructor(private renderer: Renderer2) {}
   documentToCreate: String = "";
   Documents: Documents | undefined = undefined;
 
+  showContextMenu = false;
+  contextMenuPosition = { x: 0, y: 0 };
+  targetId: number | null = null;
+
   ngOnInit(): void {
     this.getDocumentsJson();
+    document.addEventListener("click", this.onClickOutside.bind(this));
   }
 
   createDocument(documentName: String) {
@@ -56,9 +61,40 @@ export class SidebarComponent implements OnInit {
     invoke("update_index", { documentArray });
   }
 
-  deleteDocument(documentId: number) {
-    invoke("delete_document", { documentId }).then(() => {
-      this.getDocumentsJson();
-    });
+  deleteDocument() {
+    if (this.targetId !== null) {
+      const documentId = this.targetId;
+      invoke("delete_document", { documentId }).then(() => {
+        this.getDocumentsJson();
+      });
+      this.hideContextMenu();
+    }
+  }
+
+  onRightClick(event: MouseEvent, index: number): void {
+    console.log("right click");
+    event.preventDefault();
+    this.targetId = index;
+    this.contextMenuPosition = { x: event.clientX, y: event.clientY };
+    this.showContextMenu = true;
+  }
+
+  hideContextMenu(): void {
+    console.log("hide");
+    this.showContextMenu = false;
+    this.targetId = null;
+  }
+
+  onClickOutside(event: MouseEvent): void {
+    if (
+      !event.target ||
+      !(<HTMLElement>event.target).closest("#context-menu")
+    ) {
+      this.hideContextMenu();
+    }
+  }
+
+  ngOnDestroy(): void {
+    document.removeEventListener("click", this.onClickOutside.bind(this));
   }
 }

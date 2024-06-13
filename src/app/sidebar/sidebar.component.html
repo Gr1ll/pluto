@@ -3,6 +3,7 @@
     aria-hidden="false"
     aria-label="Example home icon"
     fontIcon="add_circle_outline"
+    (click)="createDocument('untitled')"
   ></mat-icon>
 </div>
 <div
@@ -11,16 +12,26 @@
   class="note-list"
   (cdkDropListDropped)="drop($event)"
 >
-  @for (document of Documents?.notes; track document.index) {
-  <div class="note-file" cdkDrag>
+  @for (document of Documents?.notes; track document.index;) {
+  <div
+    class="note-file"
+    cdkDrag
+    (contextmenu)="onRightClick($event, document.id)"
+  >
     <p class="note-text">{{ document.document_name }}</p>
-    <mat-icon
-      aria-hidden="false"
-      fontIcon="delete"
-      (click)="deleteDocument(document.id)"
-    ></mat-icon>
   </div>
   }
 </div>
-<input [(ngModel)]="documentToCreate" />
-<button (click)="createDocument(this.documentToCreate)">Test</button>
+@if (this.showContextMenu) {
+<div
+  id="context-menu"
+  class="context-menu"
+  [style.top.px]="contextMenuPosition.y"
+  [style.left.px]="contextMenuPosition.x"
+>
+  <ul>
+    <li (click)="deleteDocument()">Delete</li>
+  </ul>
+</div>
+
+}
