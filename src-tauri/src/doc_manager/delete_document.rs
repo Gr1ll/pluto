@@ -50,7 +50,11 @@ pub fn delete_document(document_id: i64) -> bool {
     file.write_all(notes_json.to_string().as_bytes()).unwrap();
 
     let document_path = app_data_dir.join(format!("{}.json", document_id));
-    remove_file(document_path);
+    match remove_file(document_path) {
+        Ok(_) => true,
+        Err(_) => false,
+    };
+
     true
 }
 
