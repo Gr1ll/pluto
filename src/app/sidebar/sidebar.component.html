@@ -5,10 +5,17 @@
     fontIcon="add_circle_outline"
   ></mat-icon>
 </div>
-@for (document of Documents?.notes; track document.index) {
-<div class="note-file">
-  <p class="note-text">{{ document.document_name }}</p>
+<div
+  cdkDropList
+  id="all-notes"
+  class="note-list"
+  (cdkDropListDropped)="drop($event)"
+>
+  @for (document of Documents?.notes; track document.index) {
+  <div class="note-file" cdkDrag>
+    <p class="note-text">{{ document.document_name }}</p>
+  </div>
+  }
 </div>
-}
 <input [(ngModel)]="documentToCreate" />
 <button (click)="createDocument(this.documentToCreate)">Test</button>

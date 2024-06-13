@@ -3,11 +3,17 @@ import { MatIconModule } from "@angular/material/icon";
 import { invoke } from "@tauri-apps/api/tauri";
 import { FormsModule } from "@angular/forms";
 import { Documents } from "../../types/documents";
+import {
+  CdkDragDrop,
+  CdkDropList,
+  CdkDrag,
+  moveItemInArray,
+} from "@angular/cdk/drag-drop";
 
 @Component({
   selector: "app-sidebar",
   standalone: true,
-  imports: [MatIconModule, FormsModule],
+  imports: [MatIconModule, FormsModule, CdkDropList, CdkDrag],
   templateUrl: "./sidebar.component.html",
   styleUrl: "./sidebar.component.css",
 })
@@ -31,5 +37,17 @@ export class SidebarComponent implements OnInit {
       return JSON.parse(res);
     });
     this.Documents?.notes.sort((a, b) => a.index - b.index);
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    if (!this.Documents) return;
+    moveItemInArray(
+      this.Documents.notes,
+      event.previousIndex,
+      event.currentIndex
+    );
+    console.log("now", event.currentIndex);
+    console.log("before", event.previousIndex);
+    console.log(event.item.element);
   }
 }

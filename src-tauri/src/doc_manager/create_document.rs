@@ -60,3 +60,10 @@ pub fn create_note_document(document_name: &str) -> bool {
     notes_file.write_all(notes_json.to_string().as_bytes()).expect("Unable to write to file");
     true
 }
+
+pub fn update_note_array(notes_array: &mut Vec<Value>) {
+    let app_data_dir = get_app_data_dir();
+    let notes_path = app_data_dir.join("notes.json");
+    let mut notes_file = File::create(notes_path).expect("Unable to create file");
+    notes_file.write_all(json!(notes_array).to_string().as_bytes()).expect("Unable to write to file");
+}

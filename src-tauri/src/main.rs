@@ -7,7 +7,7 @@ fn main() {
     doc_manager::get_documents::return_documents();
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![cmd_handler::ts_cmds::get_document_creation, cmd_handler::ts_cmds::get_documents])
+        .invoke_handler(tauri::generate_handler![cmd_handler::ts_cmds::get_document_creation, cmd_handler::ts_cmds::get_documents, cmd_handler::ts_cmds::update_index])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
