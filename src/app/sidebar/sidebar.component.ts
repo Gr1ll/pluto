@@ -30,5 +30,6 @@ export class SidebarComponent implements OnInit {
     this.Documents = await invoke("get_documents").then((res: string | any) => {
       return JSON.parse(res);
     });
+    this.Documents?.notes.reverse();
   }
 }
