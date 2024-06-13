@@ -1,7 +1,11 @@
-# Tauri + Angular
+# Pluto
 
-This template should help get you started developing with Tauri and Angular.
+A Open Source, privacy based notes application for Windows, MacOS and Linux
 
-## Recommended IDE Setup
+## Privacy
 
-[VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer) + [Angular Language Service](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template).
+All data gets stored localy on the Device, so there is noone else able to read your data.
+
+## Contributing
+
+You are free to fork this repository and create a PR if you have some useful functionality to contribute.
