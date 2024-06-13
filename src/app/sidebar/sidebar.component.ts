@@ -55,4 +55,10 @@ export class SidebarComponent implements OnInit {
     let documentArray: string = JSON.stringify(this.Documents);
     invoke("update_index", { documentArray });
   }
+
+  deleteDocument(documentId: number) {
+    invoke("delete_document", { documentId }).then(() => {
+      this.getDocumentsJson();
+    });
+  }
 }

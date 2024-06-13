@@ -16,3 +16,8 @@ pub fn get_documents() -> String {
 pub fn update_index(document_array: &str) -> bool {
     doc_manager::create_document::update_note_array(document_array)
 }
+
+#[tauri::command]
+pub fn delete_document(document_id: i64) -> bool {
+    doc_manager::delete_document::delete_document(document_id)
+}
