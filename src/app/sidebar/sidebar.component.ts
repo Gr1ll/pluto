@@ -48,6 +48,11 @@ export class SidebarComponent implements OnInit {
     );
     console.log("now", event.currentIndex);
     console.log("before", event.previousIndex);
-    console.log(event.item.element);
+
+    this.Documents.notes.forEach((note, index) => {
+      note.index = index;
+    });
+    let documentArray: string = JSON.stringify(this.Documents);
+    invoke("update_index", { documentArray });
   }
 }

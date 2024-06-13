@@ -51,19 +51,27 @@ pub fn create_note_document(document_name: &str) -> bool {
     let new_note = json!({
         "id": notes_array.len() + 1,
         "document_name": document_name,
-        "index": notes_array.len() + 1,
+        "index": 0,
     });
 
-    notes_array.push(new_note);
+    for note in notes_array.iter_mut() {
+        if let Some(index) = note["index"].as_i64() {
+            note["index"] = json!(index + 1);
+        }
+    }
+
+    notes_array.insert(0, new_note);
 
     let mut notes_file = File::create(notes_path).expect("Unable to create file");
     notes_file.write_all(notes_json.to_string().as_bytes()).expect("Unable to write to file");
     true
 }
 
-pub fn update_note_array(notes_array: &mut Vec<Value>) {
+pub fn update_note_array(notes_array: &str) -> bool {
     let app_data_dir = get_app_data_dir();
     let notes_path = app_data_dir.join("notes.json");
     let mut notes_file = File::create(notes_path).expect("Unable to create file");
-    notes_file.write_all(json!(notes_array).to_string().as_bytes()).expect("Unable to write to file");
+    //convert notes_array to JSON
+    notes_file.write_all(notes_array.to_string().as_bytes()).expect("Unable to write to file");
+    true
 }

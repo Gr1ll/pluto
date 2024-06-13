@@ -1,5 +1,3 @@
-use serde_json::Value;
-
 use crate::doc_manager;
 
 #[tauri::command]
@@ -15,6 +13,6 @@ pub fn get_documents() -> String {
 }
 
 #[tauri::command]
-pub fn update_index(document_array: &mut Vec<Value>) {
+pub fn update_index(document_array: &str) -> bool {
     doc_manager::create_document::update_note_array(document_array)
 }
