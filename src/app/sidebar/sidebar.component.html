@@ -1,18 +1,14 @@
 <div class="add-note-file">
-    <mat-icon
-        aria-hidden="false"
-        aria-label="Example home icon"
-        fontIcon="add_circle_outline"
-    ></mat-icon>
+  <mat-icon
+    aria-hidden="false"
+    aria-label="Example home icon"
+    fontIcon="add_circle_outline"
+  ></mat-icon>
 </div>
+@for (document of Documents?.notes; track document.id) {
 <div class="note-file">
-    <p class="note-text">Home</p>
+  <p class="note-text">{{ document.document_name }}</p>
 </div>
-<div class="note-file">
-    <p class="note-text">Notes</p>
-</div>
-<div class="note-file">
-    <p class="note-text">ToDos</p>
-</div>
+}
 <input [(ngModel)]="documentToCreate" />
 <button (click)="createDocument(this.documentToCreate)">Test</button>

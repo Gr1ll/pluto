@@ -5,7 +5,7 @@ use serde_json::{json, Value};
 use std::path::PathBuf;
 use dirs::data_dir;
 
-pub fn get_app_data_dir() -> PathBuf {
+fn get_app_data_dir() -> PathBuf {
     let mut path = data_dir().expect("Unable to get application data directory");
     path.push("pluto");
     path
@@ -13,7 +13,6 @@ pub fn get_app_data_dir() -> PathBuf {
 
 pub fn check_if_files_exist() {
     let app_data_dir = get_app_data_dir();
-    print!("{:?}", app_data_dir);
 
     let notes_path = app_data_dir.join("notes.json");
     let config_path = app_data_dir.join("config.json");
