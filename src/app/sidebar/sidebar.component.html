@@ -5,7 +5,7 @@
     fontIcon="add_circle_outline"
   ></mat-icon>
 </div>
-@for (document of Documents?.notes; track document.id) {
+@for (document of Documents?.notes; track document.index) {
 <div class="note-file">
   <p class="note-text">{{ document.document_name }}</p>
 </div>
