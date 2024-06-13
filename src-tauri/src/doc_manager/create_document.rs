@@ -50,7 +50,8 @@ pub fn create_note_document(document_name: &str) -> bool {
 
     let new_note = json!({
         "id": notes_array.len() + 1,
-        "document_name": document_name
+        "document_name": document_name,
+        "index": notes_array.len() + 1,
     });
 
     notes_array.push(new_note);
