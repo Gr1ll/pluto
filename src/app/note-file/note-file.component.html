@@ -1,7 +1,16 @@
 <div class="container">
   <div class="editor">
-    <h2>Markdown Editor</h2>
-    @if (isEditing) {
+    @if (isEditingTitle) {
+    <input
+      type="text"
+      [(ngModel)]="documentName"
+      (ngModelChange)="updateTitle($event)"
+      (blur)="toggleTitleView()"
+      id="title-editor"
+    />
+    } @if (!isEditingTitle) {
+    <h1 (click)="toggleEditTitle()">{{ documentName() }}</h1>
+    } @if (isEditing) {
     <textarea
       [(ngModel)]="markdownContent"
       (ngModelChange)="updateContent($event)"
@@ -9,7 +18,10 @@
       id="markdown-editor"
     ></textarea>
     } @if (!isEditing) {
-    <div [innerHTML]="markdownContent | markdown" (click)="toggleEdit()"></div>
+    <div
+      [innerHTML]="markdownContent() | markdown"
+      (click)="toggleEdit()"
+    ></div>
     }
   </div>
 </div>

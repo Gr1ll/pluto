@@ -2,8 +2,7 @@ use crate::doc_manager;
 
 #[tauri::command]
 pub fn get_document_creation(document_name: &str) -> String {
-    doc_manager::
-    create_document::create_note_document(document_name);
+    doc_manager::create_document::create_note_document(document_name);
     format!("Hello, {}! You've been greeted from Me!", document_name)
 }
 
@@ -20,4 +19,14 @@ pub fn update_index(document_array: &str) -> bool {
 #[tauri::command]
 pub fn delete_document(document_id: i64) -> bool {
     doc_manager::delete_document::delete_document(document_id)
+}
+
+#[tauri::command]
+pub fn get_document_by_id(document_id: i64) -> String {
+    doc_manager::get_documents::get_document_by_id(document_id)
+}
+
+#[tauri::command]
+pub fn get_document_name_by_id(document_id: i64) -> String {
+    doc_manager::get_documents::get_document_name_by_id(document_id)
 }

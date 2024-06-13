@@ -1,8 +1,16 @@
-import { Component, OnDestroy, OnInit, Renderer2 } from "@angular/core";
+import {
+  Component,
+  OnDestroy,
+  OnInit,
+  Renderer2,
+  WritableSignal,
+  signal,
+} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { MarkdownPipe } from "../pipe/markdown.pipe";
 import { FormsModule } from "@angular/forms";
+import { invoke } from "@tauri-apps/api/tauri";
 
 @Component({
   selector: "app-note-file",
@@ -13,33 +21,53 @@ import { FormsModule } from "@angular/forms";
 })
 export class NoteFileComponent implements OnInit, OnDestroy {
   private routeSub!: Subscription;
-  markdownContent: string = `# Hello, Markdown!`;
-  isEditing: boolean = true;
+  documentName: WritableSignal<string> = signal("");
+  markdownContent: WritableSignal<string> = signal("Initial content...");
+  isEditing: boolean = false;
+  isEditingTitle: boolean = false;
 
   constructor(private route: ActivatedRoute, private renderer: Renderer2) {}
 
   ngOnInit() {
+    let documentId: number;
     this.routeSub = this.route.params.subscribe((params) => {
-      console.log(params["noteId"]);
+      const id = params["noteId"];
+      documentId = parseInt(id);
+
+      invoke("get_document_name_by_id", { documentId }).then(
+        (res: string | any) => {
+          this.documentName.set(res);
+        }
+      );
+
+      invoke("get_document_by_id", { documentId }).then((res: string | any) => {
+        this.markdownContent.set(res);
+      });
     });
   }
 
-  updateContent(newContent: string): void {
-    this.markdownContent = newContent;
-  }
-
-  toggleEdit(): void {
+  toggleEdit() {
     this.isEditing = !this.isEditing;
-    if (this.isEditing) {
-      setTimeout(() => {
-        const textArea = document.getElementById("markdown-editor");
-        textArea?.focus();
-      });
-    }
   }
 
-  toggleView(): void {
+  toggleView() {
     this.isEditing = false;
+  }
+
+  updateContent(newContent: string) {
+    this.markdownContent.set(newContent);
+  }
+
+  toggleEditTitle() {
+    this.isEditingTitle = !this.isEditingTitle;
+  }
+
+  toggleTitleView() {
+    this.isEditingTitle = false;
+  }
+
+  updateTitle(newTitle: string) {
+    this.documentName.set(newTitle);
   }
 
   ngOnDestroy() {

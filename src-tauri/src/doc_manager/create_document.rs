@@ -1,9 +1,9 @@
-use std::fs::File;
-use std::io::{Read, Write};
+use dirs::data_dir;
 use rustc_serialize::json::Json;
 use serde_json::{json, Value};
+use std::fs::File;
+use std::io::{Read, Write};
 use std::path::PathBuf;
-use dirs::data_dir;
 
 fn get_app_data_dir() -> PathBuf {
     let mut path = data_dir().expect("Unable to get application data directory");
@@ -38,15 +38,19 @@ pub fn create_note_document(document_name: &str) -> bool {
 
     let mut notes_file = File::open(&notes_path).expect("Unable to open file");
     let mut notes_data = String::new();
-    notes_file.read_to_string(&mut notes_data).expect("Unable to read file");
+    notes_file
+        .read_to_string(&mut notes_data)
+        .expect("Unable to read file");
 
     let mut notes_json: Value = serde_json::from_str(&notes_data).expect("Unable to parse JSON");
-    let notes_array = notes_json["notes"].as_array_mut().expect("Expected notes to be an array");
+    let notes_array = notes_json["notes"]
+        .as_array_mut()
+        .expect("Expected notes to be an array");
 
-    let document_path = app_data_dir.join(format!("{}.json", notes_array.len() + 1));
-    let json = Json::from_str("{\"name\":\"John Doe\"}").unwrap();
+    let document_path = app_data_dir.join(format!("{}.md", notes_array.len() + 1));
+    let markdown = "# Hello, World!";
     let mut file = File::create(&document_path).unwrap();
-    file.write_all(json.to_string().as_bytes()).unwrap();
+    file.write_all(markdown.as_bytes()).unwrap();
 
     let new_note = json!({
         "id": notes_array.len() + 1,
@@ -63,7 +67,9 @@ pub fn create_note_document(document_name: &str) -> bool {
     notes_array.insert(0, new_note);
 
     let mut notes_file = File::create(notes_path).expect("Unable to create file");
-    notes_file.write_all(notes_json.to_string().as_bytes()).expect("Unable to write to file");
+    notes_file
+        .write_all(notes_json.to_string().as_bytes())
+        .expect("Unable to write to file");
     true
 }
 
@@ -72,6 +78,8 @@ pub fn update_note_array(notes_array: &str) -> bool {
     let notes_path = app_data_dir.join("notes.json");
     let mut notes_file = File::create(notes_path).expect("Unable to create file");
     //convert notes_array to JSON
-    notes_file.write_all(notes_array.to_string().as_bytes()).expect("Unable to write to file");
+    notes_file
+        .write_all(notes_array.to_string().as_bytes())
+        .expect("Unable to write to file");
     true
 }

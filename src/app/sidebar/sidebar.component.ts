@@ -52,8 +52,6 @@ export class SidebarComponent implements OnInit {
       event.previousIndex,
       event.currentIndex
     );
-    console.log("now", event.currentIndex);
-    console.log("before", event.previousIndex);
 
     this.Documents.notes.forEach((note, index) => {
       note.index = index;
@@ -73,7 +71,6 @@ export class SidebarComponent implements OnInit {
   }
 
   onRightClick(event: MouseEvent, index: number): void {
-    console.log("right click");
     event.preventDefault();
     this.targetId = index;
     this.contextMenuPosition = { x: event.clientX, y: event.clientY };
@@ -81,7 +78,6 @@ export class SidebarComponent implements OnInit {
   }
 
   hideContextMenu(): void {
-    console.log("hide");
     this.showContextMenu = false;
     this.targetId = null;
   }
