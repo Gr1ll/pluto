@@ -9,16 +9,17 @@ import {
   CdkDrag,
   moveItemInArray,
 } from "@angular/cdk/drag-drop";
+import { Router, RouterLink } from "@angular/router";
 
 @Component({
   selector: "app-sidebar",
   standalone: true,
-  imports: [MatIconModule, FormsModule, CdkDropList, CdkDrag],
+  imports: [MatIconModule, FormsModule, CdkDropList, CdkDrag, RouterLink],
   templateUrl: "./sidebar.component.html",
   styleUrl: "./sidebar.component.css",
 })
 export class SidebarComponent implements OnInit {
-  constructor(private renderer: Renderer2) {}
+  constructor() {}
   documentToCreate: String = "";
   Documents: Documents | undefined = undefined;
 

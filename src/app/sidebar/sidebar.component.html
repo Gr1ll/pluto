@@ -16,6 +16,7 @@
   <div
     class="note-file"
     cdkDrag
+    [routerLink]="[document.id]"
     (contextmenu)="onRightClick($event, document.id)"
   >
     <p class="note-text">{{ document.document_name }}</p>
