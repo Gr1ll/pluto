@@ -1,6 +1,6 @@
 # Pluto
 
-A Open Source, privacy based notes application for Windows, MacOS and Linux
+A Open Source, privacy based notes application for Windows, MacOS and Linux.
 
 ## Privacy
 
