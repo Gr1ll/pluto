@@ -4,7 +4,7 @@ A Open Source, privacy based notes application for Windows, MacOS and Linux.
 
 ## Privacy
 
-All data gets stored localy on the Device, so there is noone else able to see your data.
+All data gets stored on the Device, so there is noone else able to see your data.
 
 ## Contributing
 
