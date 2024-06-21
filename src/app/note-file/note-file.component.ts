@@ -1,8 +1,11 @@
 import {
+  ChangeDetectorRef,
   Component,
+  ElementRef,
   OnDestroy,
   OnInit,
   Renderer2,
+  ViewChild,
   WritableSignal,
   signal,
 } from "@angular/core";
@@ -11,7 +14,6 @@ import { Subscription } from "rxjs";
 import { MarkdownPipe } from "../pipe/markdown.pipe";
 import { FormsModule } from "@angular/forms";
 import { invoke } from "@tauri-apps/api/tauri";
-import { SidebarComponent } from "../sidebar/sidebar.component";
 import { DocService } from "../service/doc.service";
 
 @Component({
@@ -22,6 +24,9 @@ import { DocService } from "../service/doc.service";
   styleUrl: "./note-file.component.css",
 })
 export class NoteFileComponent implements OnInit, OnDestroy {
+  @ViewChild("titleEditor") titleEditor!: ElementRef;
+  @ViewChild("markdownEditor") markdownEditor!: ElementRef;
+
   private routeSub!: Subscription;
   documentName: WritableSignal<string> = signal("");
   markdownContent: WritableSignal<string> = signal("Initial content...");
@@ -32,7 +37,8 @@ export class NoteFileComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private renderer: Renderer2,
-    private docService: DocService
+    private docService: DocService,
+    private cdRef: ChangeDetectorRef
   ) {}
 
   ngOnInit() {
@@ -56,6 +62,11 @@ export class NoteFileComponent implements OnInit, OnDestroy {
 
   toggleEdit() {
     this.isEditing = !this.isEditing;
+    if (this.isEditing) {
+      setTimeout(() => {
+        this.markdownEditor.nativeElement.focus();
+      }, 0);
+    }
   }
 
   toggleView() {
@@ -74,6 +85,11 @@ export class NoteFileComponent implements OnInit, OnDestroy {
 
   toggleEditTitle() {
     this.isEditingTitle = !this.isEditingTitle;
+    if (this.isEditingTitle) {
+      setTimeout(() => {
+        this.titleEditor.nativeElement.focus();
+      }, 0);
+    }
   }
 
   toggleTitleView() {
