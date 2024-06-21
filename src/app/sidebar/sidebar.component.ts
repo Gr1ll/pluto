@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { invoke } from "@tauri-apps/api/tauri";
 import { FormsModule } from "@angular/forms";
-import { Document, Documents } from "../../types/documents";
+import { Document } from "../../types/documents";
 import {
   CdkDragDrop,
   CdkDropList,
