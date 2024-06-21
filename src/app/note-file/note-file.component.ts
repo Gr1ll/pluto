@@ -11,6 +11,8 @@ import { Subscription } from "rxjs";
 import { MarkdownPipe } from "../pipe/markdown.pipe";
 import { FormsModule } from "@angular/forms";
 import { invoke } from "@tauri-apps/api/tauri";
+import { SidebarComponent } from "../sidebar/sidebar.component";
+import { DocService } from "../service/doc.service";
 
 @Component({
   selector: "app-note-file",
@@ -27,7 +29,11 @@ export class NoteFileComponent implements OnInit, OnDestroy {
   isEditingTitle: boolean = false;
   currentDocumentId: WritableSignal<Number> = signal(new Number());
 
-  constructor(private route: ActivatedRoute, private renderer: Renderer2) {}
+  constructor(
+    private route: ActivatedRoute,
+    private renderer: Renderer2,
+    private docService: DocService
+  ) {}
 
   ngOnInit() {
     let documentId: number;
@@ -72,7 +78,9 @@ export class NoteFileComponent implements OnInit, OnDestroy {
     this.documentName.set(newTitle);
     const documentId = this.currentDocumentId();
     const documentName = newTitle;
-    invoke("update_name_by_id", { documentId, documentName });
+    invoke("update_name_by_id", { documentId, documentName }).then(() => {
+      this.docService.updateDocs();
+    });
   }
 
   ngOnDestroy() {

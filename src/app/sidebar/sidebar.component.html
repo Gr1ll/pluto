@@ -12,7 +12,7 @@
   class="note-list"
   (cdkDropListDropped)="drop($event)"
 >
-  @for (document of Documents?.notes; track document.index;) {
+  @for (document of this.docService.Documents.notes; track document.index;) {
   <div
     class="note-file"
     cdkDrag
