@@ -64,6 +64,12 @@ export class NoteFileComponent implements OnInit, OnDestroy {
 
   updateContent(newContent: string) {
     this.markdownContent.set(newContent);
+    invoke("update_note_content_by_id", {
+      documentId: this.currentDocumentId(),
+      documentContent: newContent,
+    }).then(() => {
+      this.docService.updateDocs();
+    });
   }
 
   toggleEditTitle() {

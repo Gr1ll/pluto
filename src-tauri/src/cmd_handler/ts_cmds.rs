@@ -35,3 +35,8 @@ pub fn get_document_name_by_id(document_id: i64) -> String {
 pub fn update_name_by_id(document_id: i64, document_name: &str) {
     doc_manager::write_documents::update_name_by_id(document_id, document_name);
 }
+
+#[tauri::command]
+pub fn update_note_content_by_id(document_id: i64, document_content: &str) {
+    doc_manager::write_documents::update_note_content_by_id(document_id, document_content);
+}

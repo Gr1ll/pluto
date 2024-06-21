@@ -42,3 +42,14 @@ pub fn update_name_by_id(document_id: i64, document_name: &str) -> bool {
         .expect("Unable to write to file");
     true
 }
+
+pub fn update_note_content_by_id(document_id: i64, document_content: &str) -> bool {
+    let app_data_dir = get_app_data_dir();
+    let notes_path = app_data_dir.join(format!("{}.md", document_id));
+
+    let mut notes_file = File::create(notes_path).expect("Unable to create file");
+    notes_file
+        .write_all(document_content.as_bytes())
+        .expect("Unable to write to file");
+    true
+}
