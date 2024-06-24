@@ -19,4 +19,5 @@
   flex: 1;
   overflow-y: auto;
   padding-left: 10px;
+  height: 100vh;
 }

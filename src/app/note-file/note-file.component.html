@@ -7,9 +7,10 @@
       (ngModelChange)="updateTitle($event)"
       (blur)="toggleTitleView()"
       #titleEditor
+      class="noteTitle"
     />
     } @if (!isEditingTitle) {
-    <h1 (click)="toggleEditTitle()">{{ documentName() }}</h1>
+    <p class="noteTitle" (click)="toggleEditTitle()">{{ documentName() }}</p>
     } @if (isEditing) {
     <textarea
       [(ngModel)]="markdownContent"
@@ -21,6 +22,7 @@
     <div
       [innerHTML]="markdownContent() | markdown"
       (click)="toggleEdit()"
+      class="noteContent"
     ></div>
     }
   </div>
