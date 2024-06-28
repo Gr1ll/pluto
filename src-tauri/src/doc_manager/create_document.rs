@@ -77,7 +77,6 @@ pub fn update_note_array(notes_array: &str) -> bool {
     let app_data_dir = get_app_data_dir();
     let notes_path = app_data_dir.join("notes.json");
     let mut notes_file = File::create(notes_path).expect("Unable to create file");
-    //convert notes_array to JSON
     notes_file
         .write_all(notes_array.to_string().as_bytes())
         .expect("Unable to write to file");
