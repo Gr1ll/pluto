@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from "@angular/core";
 import { MatIconModule } from "@angular/material/icon";
 import { invoke } from "@tauri-apps/api/tauri";
 import { FormsModule } from "@angular/forms";
-import { Document } from "../../types/documents";
+import { Document } from "../../../types/documents";
 import {
   CdkDragDrop,
   CdkDropList,
@@ -11,7 +11,7 @@ import {
 } from "@angular/cdk/drag-drop";
 import { Router, RouterLink } from "@angular/router";
 import { CommonModule } from "@angular/common";
-import { DocService } from "../service/doc.service";
+import { DocService } from "../../core/service/doc.service";
 
 @Component({
   selector: "app-sidebar",

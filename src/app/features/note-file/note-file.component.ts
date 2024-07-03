@@ -11,10 +11,10 @@ import {
 } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
-import { MarkdownPipe } from "../pipe/markdown.pipe";
+import { MarkdownPipe } from "../../core/pipe/markdown.pipe";
 import { FormsModule } from "@angular/forms";
 import { invoke } from "@tauri-apps/api/tauri";
-import { DocService } from "../service/doc.service";
+import { DocService } from "../../core/service/doc.service";
 
 @Component({
   selector: "app-note-file",

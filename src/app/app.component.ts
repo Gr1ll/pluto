@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterOutlet } from "@angular/router";
 import { invoke } from "@tauri-apps/api/tauri";
-import { SidebarComponent } from "./sidebar/sidebar.component";
+import { SidebarComponent } from "./features/sidebar/sidebar.component";
 
 @Component({
   selector: "app-root",
