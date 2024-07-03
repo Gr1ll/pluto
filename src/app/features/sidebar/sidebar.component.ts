@@ -28,7 +28,7 @@ import { DocService } from "../../core/service/doc.service";
   styleUrl: "./sidebar.component.css",
 })
 export class SidebarComponent implements OnInit {
-  constructor(protected docService: DocService) {}
+  constructor(protected docService: DocService, private router: Router) {}
   documentToCreate: String = "";
 
   showContextMenu = false;
@@ -75,6 +75,7 @@ export class SidebarComponent implements OnInit {
       const documentId = this.targetId;
       if (documentId === this.docService.currentDocumentId()) {
         this.docService.currentDocumentId.set(new Number());
+        this.router.navigate(["/"]);
       }
       invoke("delete_document", { documentId }).then(() => {
         this.getDocumentsJson();
