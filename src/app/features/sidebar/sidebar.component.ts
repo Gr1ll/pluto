@@ -73,6 +73,9 @@ export class SidebarComponent implements OnInit {
   deleteDocument() {
     if (this.targetId !== null) {
       const documentId = this.targetId;
+      if (documentId === this.docService.currentDocumentId()) {
+        this.docService.currentDocumentId.set(new Number());
+      }
       invoke("delete_document", { documentId }).then(() => {
         this.getDocumentsJson();
       });

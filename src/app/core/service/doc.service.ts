@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, WritableSignal, signal } from "@angular/core";
 import { invoke } from "@tauri-apps/api/tauri";
 import { Documents } from "../../../types/documents";
 
@@ -9,6 +9,7 @@ export class DocService {
   constructor() {}
 
   public Documents: Documents | any = {};
+  public currentDocumentId: WritableSignal<Number> = signal(new Number());
 
   public createDocument(documentName: String) {
     invoke("get_document_creation", { documentName }).then(() => {
